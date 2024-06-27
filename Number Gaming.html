@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Number Guessing Game</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
+</style>
+</head>
+<body>
+<h1>Number Guessing Game</h1>
+<p>Guess a number between 1 and 100. You have 5 attempts.</p>
+<button onclick="checkGuess()">Submit Guess</button>
+<p id="message"></p>
+<script>
+    const maxAttempts = 5;
+    let randomNumber = Math.floor(Math.random() * 100) + 1;
+    let attemptsRemaining = maxAttempts;
+
+    function checkGuess() {
+        const userInput = prompt("Please enter your guess (a number between 1 and 100):");
+        const guess = parseInt(userInput);
+
+        if (isNaN(guess) || guess < 1 || guess > 100) {
+            setMessage('Please enter a valid number between 1 and 100.');
+            return;
+        }
+
+        attemptsRemaining--;
+        if (guess === randomNumber) {
+            setMessage(`Congratulations! You guessed the number ${randomNumber} correctly!`);
+            disableInput();
+        } else if (attemptsRemaining === 0) {
+            setMessage(`Game over! The correct number was ${randomNumber}.`);
+            disableInput();
+        } else if (guess < randomNumber) {
+            setMessage(`Too low! You have ${attemptsRemaining} attempts remaining.`);
+        } else {
+            setMessage(`Too high! You have ${attemptsRemaining} attempts remaining.`);
+        }
+    }
+
+    function setMessage(message) {
+        document.getElementById('message').textContent = message;
+    }
+
+    function disableInput() {
+        document.querySelector('button').disabled = true;
+    }
+</script>
+</body>
+</html>
